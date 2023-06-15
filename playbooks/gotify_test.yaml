@@ -1,0 +1,22 @@
+---
+- hosts: all
+  gather_facts: false
+
+  vars:
+    gotify_server_ip: "{{ server_ip }}"
+    gotify_access_token: "{{ access_token }}"
+
+  tasks:
+    - name: Send message
+      uri:
+        url: "https://{{ gotify_server_ip }}/message?token={{ gotify_access_token }}"
+        method: POST
+        body: "message=Hello from Ansible"
+        body_format: raw
+        status_code: 200
+        validate_certs: no
+      register: response
+
+    - name: Check response
+      debug:
+        var: response
