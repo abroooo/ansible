@@ -9,7 +9,7 @@
   tasks:
     - name: Send message
       uri:
-        url: "https://{{ gotify_server_ip }}/message?token={{ gotify_access_token }}"
+        url: "http://{{ gotify_server_ip }}/message?token={{ gotify_access_token }}"
         method: POST
         body: "message=Hello from Ansible"
         body_format: raw
