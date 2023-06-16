@@ -6,7 +6,7 @@
     gotify_server_ip: "{{ server_ip }}"
     gotify_access_token: "{{ access_token }}"
     gotify_message: "{{ hostvars[inventory_hostname].message }}"
-    lsb: "{{ ansible_lsb }}"
+    lsb: "{{ ansible_facts['ansible_lsb'] }}"
 
   tasks:
     - name: Send message
