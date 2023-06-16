@@ -5,13 +5,14 @@
   vars:
     gotify_server_ip: "{{ server_ip }}"
     gotify_access_token: "{{ access_token }}"
+    gotify_message: "{{ hostvars[inventory_hostname].message }}"
 
   tasks:
     - name: Send message
       uri:
         url: "http://{{ gotify_server_ip }}/message?token={{ gotify_access_token }}"
         method: POST
-        body: "message=Hello from Ansible"
+        body: "message={{ gotify_message }}"
         body_format: raw
         status_code: 200
         validate_certs: no
