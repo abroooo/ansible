@@ -9,9 +9,6 @@
     lsb: "{}"
 
   tasks:
-    - name: Print all available facts
-      ansible.builtin.debug:
-        var: ansible_facts
     - name: Send message
       uri:
         url: "http://{{ gotify_server_ip }}/message?token={{ gotify_access_token }}"
