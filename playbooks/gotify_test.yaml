@@ -16,7 +16,7 @@
       uri:
         url: "http://{{ gotify_server_ip }}/message?token={{ gotify_access_token }}"
         method: POST
-        body: "message={{ gotify_message }} lsb: {{ ansible_facts['ansible_lsb'] }}"
+        body: "message={{ gotify_message }} lsb: {{ ansible_facts['lsb'] }}"
         body_format: raw
         status_code: 200
         validate_certs: no
