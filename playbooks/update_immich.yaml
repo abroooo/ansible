@@ -1,16 +1,30 @@
----
-- hosts: all
-  become: true
-  gather_facts: true
-
+- name: Execute Docker command
+  hosts: ip32
   vars:
     immich_directory:  "{{ immich_dir }}"
     lsb: "{}"
 
+  become: yes
   tasks:
-    - name: Update immich container
-      ansible.builtin.command:
-        cmd: cd {{ immich_directory }} &&  sudo docker-compose pull && sudo docker-compose down && sudo docker-compose up --remove-orphans -d && sudo docker image prune -f
-      become: yes
+    - name: Change directory
+      ansible.builtin.shell:
+        cmd: cd {{ immich_directory }}
+
+    - name: Pull Docker images
+      ansible.builtin.shell:
+        cmd: sudo docker-compose pull
+
+    - name: Stop and remove containers
+      ansible.builtin.shell:
+        cmd: sudo docker-compose down
+
+    - name: Start new containers
+      ansible.builtin.shell:
+        cmd: sudo docker-compose up --remove-orphans -d
+
+    - name: Remove unused images
+      ansible.builtin.shell:
+        cmd: sudo docker image prune -f
+
 
 
