@@ -1,5 +1,5 @@
 - name: Execute Docker command
-  hosts: ip32
+  hosts: host1
   vars:
     immich_directory:  "{{ immich_dir }}"
     lsb: "{}"
