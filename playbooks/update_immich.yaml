@@ -1,0 +1,16 @@
+---
+- hosts: all
+  become: true
+  gather_facts: true
+
+  vars:
+    immich_directory:  "{{ immich_dir }}"
+    lsb: "{}"
+
+  tasks:
+    - name: Update immich container
+      ansible.builtin.command:
+        cmd: cd {{ immich_directory }} &&  sudo docker-compose pull && sudo docker-compose down && sudo docker-compose up --remove-orphans -d && sudo docker image prune -f
+        become: yes
+
+
