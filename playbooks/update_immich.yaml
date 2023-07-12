@@ -12,15 +12,15 @@
 
     - name: Pull Docker images
       ansible.builtin.shell:
-        cmd: sudo docker-compose pull
+        cmd: cd {{ immich_directory }} && sudo docker-compose pull
 
     - name: Stop and remove containers
       ansible.builtin.shell:
-        cmd: sudo docker-compose down
+        cmd: cd {{ immich_directory }} && sudo docker-compose down
 
     - name: Start new containers
       ansible.builtin.shell:
-        cmd: sudo docker-compose up --remove-orphans -d
+        cmd: cd {{ immich_directory }} && sudo docker-compose up --remove-orphans -d
 
     - name: Remove unused images
       ansible.builtin.shell:
