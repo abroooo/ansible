@@ -11,6 +11,6 @@
     - name: Update immich container
       ansible.builtin.command:
         cmd: cd {{ immich_directory }} &&  sudo docker-compose pull && sudo docker-compose down && sudo docker-compose up --remove-orphans -d && sudo docker image prune -f
-        become: yes
+      become: yes
 
 
