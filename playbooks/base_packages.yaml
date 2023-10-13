@@ -1,0 +1,15 @@
+---
+- hosts: all
+  gather_facts: true
+  become: yes
+
+
+  tasks:
+    - name: Add Neovim repository
+      ansible.builtin.command: |
+        sudo add-apt-repository ppa:neovim-ppa/unstable
+        sudo apt-get update
+
+    - name: Install Neovim nightly version
+      ansible.builtin.command: sudo apt-get install -y neovim zsh tmux stow exa fzf ripgrep
+
