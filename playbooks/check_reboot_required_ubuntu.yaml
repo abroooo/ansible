@@ -26,7 +26,9 @@
         status_code: 200
         validate_certs: no
       register: response
+      when: reboot_required.stat.exists
 
     - name: Check response
       debug:
         var: response
+      when: reboot_required.stat.exists
