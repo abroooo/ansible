@@ -1,7 +1,7 @@
 ---
 - name: check disk space
 # from https://github.com/ChristianLempa/boilerplates/blob/main/ansible/maintenance/maint-diskspace
-  hosts: "{{ hosts }}"
+- hosts: all
   tasks:
     - name: get disk usage
       command: df -h
