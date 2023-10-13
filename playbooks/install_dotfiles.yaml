@@ -1,0 +1,52 @@
+---
+- hosts: all
+  gather_facts: true
+
+  vars:
+    gotify_server_ip: "{{ server_ip }}"
+    gotify_access_token: "{{ access_token }}"
+    gotify_message: "{{ hostvars[inventory_hostname].message }}"
+    lsb: "{}"
+
+  tasks:
+    - name: Check if stow is installed
+      ansible.builtin.command: stow --version
+      register: stow_output
+      ignore_errors: true
+
+    - name: Install stow package
+      ansible.builtin.package:
+        name: stow
+        state: present
+      when: stow_output.rc != 0
+
+    - name: Clone dotfiles repository
+      ansible.builtin.git:
+        repo: https://github.com/abroooo/dotfiles.git
+        dest: ~/dotfiles
+        clone: yes
+        update: yes
+        version: nvim_lua_config
+
+    - name: Run "stow -S ." inside dotfiles repository
+      ansible.builtin.command: stow -S .
+      args:
+        chdir: ~/dotfiles
+    - name: Add Neovim repository
+      ansible.builtin.command: |
+        sudo add-apt-repository ppa:neovim-ppa/unstable
+        sudo apt-get update
+
+    - name: Install Neovim nightly version
+      ansible.builtin.command: sudo apt-get install -y neovim zsh tmux
+
+    - name: Clone packer.nvim repository
+      ansible.builtin.git:
+        repo: https://github.com/wbthomason/packer.nvim
+        dest: ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+        depth: 1
+
+    - name: Install nvim plugins
+      ansible.builtin.shell:
+        cmd: "nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'"
+
