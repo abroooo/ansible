@@ -8,6 +8,7 @@
     - name: Add Neovim repository
       apt_repository:
         repo: ppa:neovim-ppa/unstable
+    - name: update cache
       ansible.builtin.command: |
         sudo apt-get update
 
