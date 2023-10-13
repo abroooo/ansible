@@ -1,0 +1,32 @@
+---
+- hosts: all
+  become: yes
+
+  vars:
+    gotify_server_ip: "{{ server_ip }}"
+    gotify_access_token: "{{ access_token }}"
+    gotify_message: "{{ hostvars[inventory_hostname].message }}"
+    lsb: "{}"
+
+  tasks:
+    - name: check if system reboot is required
+      become: true
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required
+    - debug:
+        msg: "Reboot is required"
+      when: reboot_required.stat.exists
+    - name: Send message
+      uri:
+        url: "http://{{ gotify_server_ip }}/message?token={{ gotify_access_token }}"
+        method: POST
+        body: "message={{ gotify_message }} requires reboot"
+        body_format: raw
+        status_code: 200
+        validate_certs: no
+      register: response
+
+    - name: Check response
+      debug:
+        var: response
