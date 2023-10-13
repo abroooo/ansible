@@ -1,6 +1,7 @@
 ---
 - hosts: all
   gather_facts: true
+  become: yes
 
   vars:
     gotify_server_ip: "{{ server_ip }}"
