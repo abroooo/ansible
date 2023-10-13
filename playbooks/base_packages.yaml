@@ -6,8 +6,9 @@
 
   tasks:
     - name: Add Neovim repository
+      apt_repository:
+        repo: ppa:neovim-ppa/unstable
       ansible.builtin.command: |
-        sudo add-apt-repository ppa:neovim-ppa/unstable
         sudo apt-get update
 
     - name: Install Neovim nightly version
