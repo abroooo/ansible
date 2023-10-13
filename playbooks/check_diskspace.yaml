@@ -1,6 +1,4 @@
 ---
-- name: check disk space
-# from https://github.com/ChristianLempa/boilerplates/blob/main/ansible/maintenance/maint-diskspace
 - hosts: all
   tasks:
     - name: get disk usage
@@ -19,3 +17,4 @@
     #       Content-Type: application/json
     #     status_code: 204
     #   when: disk_usage.stdout[:-1]|int > 80
+# from https://github.com/ChristianLempa/boilerplates/blob/main/ansible/maintenance/maint-diskspace
