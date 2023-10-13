@@ -12,6 +12,19 @@
       ansible.builtin.command: |
         sudo apt-get update
 
-    - name: Install Neovim nightly version
-      ansible.builtin.command: sudo apt-get install -y neovim zsh tmux stow exa fzf ripgrep
+    - name: Install base packages
+      become: yes
+      ansible.builtin.apt:
+        name:
+          - git
+          - tmux
+          - neovim
+          - exa
+          - ripgrep
+          - fzf
+          - nodejs
+          - stow
+          - zsh
+        state: present
+      # ansible.builtin.command: sudo apt-get install -y neovim zsh tmux stow exa fzf ripgrep
 
