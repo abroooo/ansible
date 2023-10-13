@@ -7,6 +7,10 @@
     - name: check disk space available
       shell: df -h / | awk 'NR==2 {print $5}'
       register: disk_usage
+    - name: print usage
+      ansible.builtin.debug:
+        msg: disk usage is {{ disk_usage }}
+      when: disk_usage is defined
     # - name: send discord message when disk space is over 80%
     #   uri:
     #     url: "your-webhook"
